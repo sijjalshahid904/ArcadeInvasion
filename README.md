@@ -48,4 +48,6 @@ Fire: https://assetstore.unity.com/packages/vfx/particles/fire-explosions/proced
 
 Retro Font: https://assetstore.unity.com/packages/2d/fonts/free-pixel-font-thaleah-140059
 
+Shooting Sound: https://assetstore.unity.com/packages/audio/sound-fx/shooting-sound-177096
+
 Video Link: https://drive.google.com/file/d/1lCNuBIdqjRfnF3HEtRndMpF5JVVE7_Pp/view?usp=sharing
