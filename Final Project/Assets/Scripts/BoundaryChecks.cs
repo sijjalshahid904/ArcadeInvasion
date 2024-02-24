@@ -17,7 +17,7 @@ public class BoundaryChecks : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Fire")||collision.gameObject.CompareTag("Asteroid")||collision.gameObject.CompareTag("SpiderFire"))
+        if(collision.gameObject.CompareTag("Fire")||collision.gameObject.CompareTag("Boss")||collision.gameObject.CompareTag("SpiderFire"))
             Destroy(collision.gameObject);
     }
 }

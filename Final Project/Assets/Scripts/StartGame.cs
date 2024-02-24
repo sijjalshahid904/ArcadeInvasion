@@ -19,9 +19,13 @@ public class StartGame : MonoBehaviour
     public bool isLose = false;
     public int level = 1;
     public GameObject winText;
+    public GameObject Boss;
     public TextMeshProUGUI loseLevel;
     public GameObject SpiderLevel;
-    
+    public TextMeshProUGUI ScoreText;
+    public TextMeshProUGUI Scores;
+    public int score = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +44,7 @@ public class StartGame : MonoBehaviour
     }
     void startGame()
     {   
+        Scores.gameObject.SetActive(false);
         SpiderLevel.gameObject.SetActive(true);
         planetMode.gameObject.SetActive(false);
         Instructions.gameObject.SetActive(false);
@@ -50,6 +55,7 @@ public class StartGame : MonoBehaviour
     }
     void restartGame()
     {
+        Scores.gameObject.SetActive(false);
         planetMode.gameObject.SetActive(false);
         Instructions.gameObject.SetActive(false);
         Retro.gameObject.SetActive(false);
@@ -61,6 +67,9 @@ public class StartGame : MonoBehaviour
     {
         if (isLose == true && level==1)
         {
+            Scores.gameObject.SetActive(true);
+            Scores.text = "SCORE: " + score;
+            Boss.gameObject.SetActive(false);
             loseLevel.gameObject.SetActive(true);
             restart.gameObject.SetActive(true);
             SpiderLevel.gameObject.SetActive(false);
@@ -70,10 +79,12 @@ public class StartGame : MonoBehaviour
 
         if (isWin == true && level == 1)
         {
+            Scores.gameObject.SetActive(true);
+            Scores.text = "SCORE: " + score;
+            Boss.gameObject.SetActive(false);
             SpiderLevel.gameObject.SetActive(false);
             winText.gameObject.SetActive(true);
             restart.gameObject.SetActive(true);
-
             restart.onClick.AddListener(restartGame);
         }
        

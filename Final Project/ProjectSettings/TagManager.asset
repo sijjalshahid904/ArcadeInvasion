@@ -20,6 +20,7 @@ TagManager:
   - Boundary
   - PlaneFire
   - Plane
+  - Boss
   layers:
   - Default
   - TransparentFX

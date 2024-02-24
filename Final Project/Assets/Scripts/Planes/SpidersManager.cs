@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpidersManager : MonoBehaviour
 {
     public GameObject projectile;
+    public GameObject boss;
     private List<GameObject> spiders = new List<GameObject>();
     private StartGame sg;
     private float startDelay = 0.5f;
@@ -19,7 +20,7 @@ public class SpidersManager : MonoBehaviour
     private float[] posX = { 9f, 11f, 13f, 15f };
     public int wavenumber = 0;
     public int spidersCount;
-    private float[] sizes = { 0.01f, 0.015f, 0.02f, 0.025f };
+    private float[] sizes = { 0.02f, 0.025f, 0.03f, 0.035f };
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +33,16 @@ public class SpidersManager : MonoBehaviour
     {
         if (wavenumber == 4 && CountAliveSpiders() == 0 && sg.level == 1)
         {
-            sg.isWin = true;
+
+            sg.Boss.gameObject.SetActive(true);
+            GameObject Boss = Instantiate(boss, new Vector3(13, 5, 0), Quaternion.Euler(0, -90, 90));
+            SpiderMove bossMove = Boss.GetComponent<SpiderMove>();
+            Vector3 pos = new Vector3(0.3f, 0.3f, 0.3f);
+            bossMove.transform.localScale = pos;
+            bossMove.hits = 50;
+            bossMove.pos = new Vector3(7, 5, 0);
+            wavenumber++;
+            //sg.isWin = true;
         }
     }
     void SpawnRandomSpiders()

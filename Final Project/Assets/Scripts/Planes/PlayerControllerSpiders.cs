@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerControllerSpiders : MonoBehaviour
 {
     public TextMeshProUGUI livesText;
+    
     private StartGame sg;
     private BodyMove bm;
     private float mouseY;
@@ -14,6 +15,7 @@ public class PlayerControllerSpiders : MonoBehaviour
     public float maxRange = 135.0f;
     public float minRange = 0.0f;
     public int lives = 5;
+
     public AudioClip collisionSoundClip; // Assign the audio clip in the Unity Editor
     private AudioSource audioSource;
 

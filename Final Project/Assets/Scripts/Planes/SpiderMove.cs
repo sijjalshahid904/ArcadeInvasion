@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class SpiderMove : MonoBehaviour
 {
@@ -34,6 +37,7 @@ public class SpiderMove : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         sg = GameObject.Find("GameStart").GetComponent<StartGame>();
         bm = GameObject.Find("MoveS").GetComponent<BodyMove>();
+        sg.ScoreText.text = "SCORE: " + sg.score;
     }
 
     // Update is called once per frame
@@ -57,7 +61,10 @@ public class SpiderMove : MonoBehaviour
         {
             if (transform.position.x > pos.x)
             {
-              
+                if(gameObject.CompareTag("Boss"))
+                {
+                    speed = 1;
+                }
                 transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * speed);
             }
             else
@@ -94,10 +101,17 @@ public class SpiderMove : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Fire"))
         {
+            sg.score = sg.score + 5;
+            sg.ScoreText.text = "SCORE: " + sg.score;
             Destroy(collision.gameObject);
             if(hits < 1)
             {
                 Instantiate(ps, transform.position, ps.transform.rotation);
+                if(gameObject.CompareTag("Boss"))
+                {
+
+                    sg.isWin = true;
+                }
                 Destroy(gameObject);
             }
             else
@@ -116,7 +130,14 @@ public class SpiderMove : MonoBehaviour
         while (shouldCastBeam)
         {
             isCastingBeam = true;
-            CastBeam();
+            if (gameObject.CompareTag("Boss"))
+            {
+                BossBeams();
+            }
+            else
+            {
+                CastBeam();
+            }           
             yield return StartCoroutine(waiting());
             isCastingBeam = false;
         }
@@ -140,6 +161,33 @@ public class SpiderMove : MonoBehaviour
             beamObject.transform.position += direction * distance * 0.5f;
             beamObject.transform.localScale = new Vector3(0.05f, 0.05f, distance - 0.6f);
             Destroy(beamObject, 1f);
+        }
+    }
+    void BossBeams()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            // Get the child object by name (assuming they are named p1, p2, p3)
+            Transform child = transform.Find("p" + (i + 1));
+
+            if (child != null)
+            {
+                if (bm.isAlive == true)
+                {
+                    Vector3 direction = (player.transform.position - child.position).normalized;
+                    Quaternion rotation = Quaternion.LookRotation(direction);
+                    float distance = Vector3.Distance(child.position, player.transform.position);
+                    float beamScale = distance * scaleFactor;
+                    GameObject beamObject = Instantiate(beamPrefab, child.position, rotation);
+                    GameObject SpFire = Instantiate(firePrefab, child.position, rotation);
+                    SpiderShoot spiderShoot = SpFire.GetComponent<SpiderShoot>();
+                    spiderShoot.speed = 5; 
+                    beamObject.transform.localScale = new Vector3(0.05f, 0.05f, beamScale);
+                    beamObject.transform.position += direction * distance * 0.5f;
+                    beamObject.transform.localScale = new Vector3(0.05f, 0.05f, distance - 0.6f);
+                    Destroy(beamObject, 1f);
+                }
+            }
         }
     }
 
